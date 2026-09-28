@@ -1,0 +1,7 @@
+data/raw/
+data/clean/
+*.DTA
+*.dta
+.Rproj.user/
+.Rhistory
+.RData
