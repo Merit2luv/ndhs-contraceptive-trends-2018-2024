@@ -75,3 +75,34 @@ region_change <- region_change %>%
 
 region_change
 write_csv(region_change, "outputs/mcpr_change_by_region.csv")
+
+w18 <- des18 %>% filter(in_union) %>% group_by(wealth = as.character(haven::as_factor(v190))) %>%
+  summarise(mcpr_2018 = survey_mean(modern, na.rm = TRUE))
+
+w24 <- des24 %>% filter(in_union) %>% group_by(wealth = as.character(haven::as_factor(v190))) %>%
+  summarise(mcpr_2024 = survey_mean(modern, na.rm = TRUE))
+
+wealth_change <- left_join(w18, w24, by = "wealth") %>%
+  mutate(change = mcpr_2024 - mcpr_2018,
+         se_change = sqrt(mcpr_2018_se^2 + mcpr_2024_se^2),
+         lo = change - 1.96 * se_change, hi = change + 1.96 * se_change,
+         clear = lo > 0 | hi < 0)
+wealth_change
+
+e18 <- des18 %>% filter(in_union, as.numeric(v106) != 8) %>%
+  group_by(educ = as.character(haven::as_factor(v106))) %>%
+  summarise(mcpr_2018 = survey_mean(modern, na.rm = TRUE))
+
+e24 <- des24 %>% filter(in_union, as.numeric(v106) != 8) %>%
+  group_by(educ = as.character(haven::as_factor(v106))) %>%
+  summarise(mcpr_2024 = survey_mean(modern, na.rm = TRUE))
+
+educ_change <- left_join(e18, e24, by = "educ") %>%
+  mutate(change = mcpr_2024 - mcpr_2018,
+         se_change = sqrt(mcpr_2018_se^2 + mcpr_2024_se^2),
+         lo = change - 1.96 * se_change, hi = change + 1.96 * se_change,
+         clear = lo > 0 | hi < 0)
+educ_change
+
+write_csv(wealth_change, "outputs/mcpr_change_by_wealth.csv")
+write_csv(educ_change, "outputs/mcpr_change_by_education.csv")
