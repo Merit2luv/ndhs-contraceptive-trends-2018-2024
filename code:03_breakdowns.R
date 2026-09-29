@@ -106,3 +106,19 @@ educ_change
 
 write_csv(wealth_change, "outputs/mcpr_change_by_wealth.csv")
 write_csv(educ_change, "outputs/mcpr_change_by_education.csv")
+
+val_labels(ir18$v025); val_labels(ir24$v025)
+u18 <- des18 %>% filter(in_union) %>% group_by(resid = as.character(haven::as_factor(v025))) %>%
+  summarise(mcpr_2018 = survey_mean(modern, na.rm = TRUE))
+
+u24 <- des24 %>% filter(in_union) %>% group_by(resid = as.character(haven::as_factor(v025))) %>%
+  summarise(mcpr_2024 = survey_mean(modern, na.rm = TRUE))
+
+resid_change <- left_join(u18, u24, by = "resid") %>%
+  mutate(change = mcpr_2024 - mcpr_2018,
+         se_change = sqrt(mcpr_2018_se^2 + mcpr_2024_se^2),
+         lo = change - 1.96 * se_change, hi = change + 1.96 * se_change,
+         clear = lo > 0 | hi < 0)
+resid_change
+
+write_csv(resid_change, "outputs/mcpr_change_by_residence.csv")
