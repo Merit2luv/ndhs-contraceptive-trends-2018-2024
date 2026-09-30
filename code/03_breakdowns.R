@@ -122,3 +122,29 @@ resid_change <- left_join(u18, u24, by = "resid") %>%
 resid_change
 
 write_csv(resid_change, "outputs/mcpr_change_by_residence.csv")
+
+wealth_long <- wealth_change %>%
+  select(wealth, mcpr_2018, mcpr_2024) %>%
+  pivot_longer(cols = c(mcpr_2018, mcpr_2024), names_to = "year", values_to = "mcpr") %>%
+  mutate(year = ifelse(year == "mcpr_2018", "2018", "2024"),
+         wealth = factor(wealth, levels = c("poorest","poorer","middle","richer","richest")))
+
+p <- ggplot(wealth_long, aes(x = wealth, y = mcpr, fill = year)) +
+  geom_col(position = position_dodge(width = 0.7), width = 0.6) +
+  scale_fill_manual(values = c("2018" = "#8a9bab", "2024" = "#2ec4b6")) +
+  labs(
+    title = "Modern contraceptive use by wealth: 2018 vs 2024",
+    subtitle = "Women currently in union, Nigeria",
+    x = NULL, y = "Modern CPR (%)", fill = NULL,
+    caption = "Source: NDHS 2018 & 2023-24, DHS Program"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank(),
+    legend.position = "top"
+  )
+
+p
+ggsave("outputs/wealth_gap_chart.png", p, width = 10, height = 6, dpi = 300, bg = "white")
