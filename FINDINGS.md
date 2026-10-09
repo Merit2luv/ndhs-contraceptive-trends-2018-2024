@@ -1,6 +1,6 @@
 # Findings: Contraceptive Use and Method Retention in Nigeria, 2018 to 2024
 
-**Data:** NDHS 2018 and 2024, women aged 15-49 (41,821 and 39,050 women).
+**Data:** NDHS 2018 and NDHS 2023-24 (labelled "2024" throughout), women aged 15-49 (41,821 and 39,050 women).
 **Author:** Ofikwu Matthew
 
 ## Summary
@@ -113,11 +113,96 @@ Each arrow runs from a zone's 2018 position to its 2024 position. Right means mo
 - **North East:** use rose clearly, but discontinuation appears to have risen too. More women are starting, and possibly more are stopping. This needs a closer look.
 - **South West:** the highest and fastest-rising use, with the lowest discontinuation in both rounds.
 
+## 4. Adjusted models
+
+Both surveys pooled, survey-weighted (PSUs and strata kept distinct by year). Reference groups: 2018, age 15-19, rural, poorest, no education, North West. These are adjusted associations, not causal effects.
+
+### 4a. Modern contraceptive use (logistic regression)
+
+Adjusted odds ratios, 95% CI.
+
+| Factor | Adjusted OR (95% CI) |
+|---|---|
+| **Survey year 2024** (vs 2018) | **1.31 (1.22-1.40)** |
+| Age 20-24 | 4.86 (4.26-5.55) |
+| Age 25-29 | 6.95 (6.07-7.96) |
+| Age 30-34 | 7.95 (6.94-9.10) |
+| Age 35-39 | 9.00 (7.79-10.4) |
+| Age 40-44 | 8.49 (7.38-9.77) |
+| Age 45-49 | 5.19 (4.41-6.11) |
+| Urban (vs rural) | 0.99 (0.91-1.07), not significant |
+| Wealth: poorer | 1.39 (1.20-1.62) |
+| Wealth: middle | 1.89 (1.63-2.20) |
+| Wealth: richer | 2.33 (2.00-2.72) |
+| Wealth: richest | 2.28 (1.94-2.70) |
+| Education: primary | 2.10 (1.87-2.35) |
+| Education: secondary | 2.57 (2.29-2.89) |
+| Education: higher | 2.63 (2.32-3.00) |
+| Zone: North Central | 1.52 (1.33-1.74) |
+| Zone: North East | 1.44 (1.25-1.66) |
+| Zone: South East | 0.99 (0.86-1.15), not significant |
+| Zone: South South | 1.38 (1.20-1.58) |
+| Zone: South West | 1.96 (1.71-2.24) |
+
+![Adjusted odds ratios](outputs/charts/or_forest_modern_use.png)
+
+- **The rise in use is not a composition effect.** The odds of use were 31% higher in 2024 after adjusting for age, residence, wealth, education and zone.
+- **Age is the strongest predictor.** Odds peak at ages 35-39 (about 9 times the odds at 15-19) and fall again at 45-49.
+- **Wealth and education gradients persist when adjusted for each other.** The wealth effect levels off at the top: richer and richest are statistically indistinguishable.
+- **The urban-rural gap disappears** once wealth, education and zone are accounted for.
+- **The South East looks no different from the North West** after adjustment, even though its raw use is higher.
+
+### 4b. Did the wealth gap change?
+
+Linear probability model with a year × wealth interaction, so results are in percentage points. The 2024 row is the adjusted change for the poorest women (reference). The other rows are how much *more* each group changed than the poorest. For the richest, that is the **change in the richest-poorest gap**.
+
+| Term | Pts (95% CI) |
+|---|---|
+| Change for the poorest, 2018 to 2024 | +1.2 (0.3 to 2.1) |
+| Extra change: poorer | +0.2 (-1.2 to 1.6), not significant |
+| Extra change: middle | +1.3 (-0.2 to 2.8), not significant |
+| Extra change: richer | +2.0 (0.4 to 3.6) |
+| **Extra change: richest (gap change)** | **+3.0 (1.2 to 4.8)** |
+
+The richest-poorest gap in use widened by about 3 points after adjustment, close to the unadjusted 3.3 points. On the odds scale, a Wald test of the year × wealth interaction found no change in the wealth gradient (F = 0.15, p = 0.96).
+
+Both results can be true. Wealthier women start from a higher level, so the same *relative* rise produces a larger gain in points. For programme planning the absolute gap is the practical measure. The relative result says the poorest women are not falling behind proportionally.
+
+### 4c. 12-month retention (Cox models)
+
+Hazard ratio (HR) below 1 = lower chance of stopping within 12 months = better retention.
+
+| 2024 vs 2018 | HR (95% CI) | p |
+|---|---|---|
+| Adjusted for wealth, education, zone | 0.86 (0.80-0.94) | 0.0003 |
+| ...and also for method | 0.91 (0.84-0.99) | 0.024 |
+
+**Method effects** (vs pill, from the model that includes method):
+
+| Method | HR (95% CI) |
+|---|---|
+| Implants | 0.24 (0.21-0.28) |
+| IUD | 0.21 (0.15-0.29) |
+| Male condom | 0.60 (0.53-0.68) |
+| Traditional | 0.57 (0.51-0.63) |
+| Other modern | 0.58 (0.40-0.84) |
+| Injectables | 0.92 (0.83-1.03), not significant |
+
+**Other factors** (same model):
+- Wealth: only the richest differ from the poorest (HR 0.76, 0.64-0.89).
+- Education: no significant differences.
+- Zone (vs North West): South West 0.55 (0.47-0.65), South South 0.71 (0.60-0.83), North Central 0.82 (0.71-0.95). The North East is close to the North West (1.02, 0.87-1.18) and the South East is not significantly different (0.91, 0.78-1.06).
+
+- **Retention improved even among comparable women.** The 2024 hazard of stopping was about 14% lower after adjusting for who the users are.
+- **Method mix explains part of it.** Adding method shrinks the 2024 effect from 14% to 9% lower hazard (roughly a third of the effect on the log scale). That is consistent with a shift toward implants and other stickier methods, but it does not prove the shift caused the gain. A significant 2024 effect remains.
+- **Implants and IUDs are the stickiest methods by a wide margin:** about 76% and 79% lower hazard of stopping than the pill. Injectables retain about as poorly as the pill.
+- **The raw education gradient in retention largely disappears** once wealth, zone and method are held constant.
+
 ## What this does and doesn't show
 
 **Supported by the data:** the national rise in modern use; the national fall in discontinuation; the richest and North West declines in discontinuation; the widening absolute wealth gap in use.
 
-**Not supported:** any claim about why. The shift toward implants, which are among the stickiest methods and whose use grew, is a plausible contributor to better retention, but this analysis does not test that. The North East result and the poorest-women result are consistent with no change.
+**Not supported:** any claim about why. The adjusted retention model suggests that the shift toward stickier methods, mainly implants, accounts for part of the retention gain (the 2024 effect weakens from HR 0.86 to 0.91 once method is added), but it cannot show the shift caused it, and a significant 2024 effect remains. The North East result and the poorest-women result are consistent with no change.
 
 **Implications worth exploring (hypotheses, not findings):**
 - Retention support, such as counselling and follow-up, may matter most for pill and injectable users, who have the highest discontinuation.
@@ -126,4 +211,4 @@ Each arrow runs from a zone's 2018 position to its 2024 position. Right means mo
 
 ## Method notes and limitations
 
-Full methods are in the [README](README.md). The main limitations: calendar data depend on recall; the two discontinuation windows cover different 5-year periods; `n` counts episodes not women; subgroup results are descriptive and unadjusted for multiple comparisons; and reasons for discontinuation were not analysed.
+Full methods are in the [README](README.md). The main limitations: calendar data depend on recall; the two discontinuation windows cover different 5-year periods; `n` counts episodes not women; subgroup results are descriptive and unadjusted for multiple comparisons; reasons for discontinuation were not analysed; and the adjusted models show associations, not causal effects. The Cox models' proportional-hazards assumption was not formally checked.

@@ -1,0 +1,17 @@
+method,type,year,estimate,lo,hi,n
+Pill,Modern,2018,0.4655,0.4236,0.5085,1052
+IUD,Modern,2018,0.1332,0.088,0.1875,223
+Injectables,Modern,2018,0.4858,0.4523,0.5185,1939
+Male condom,Modern,2018,0.3051,0.2732,0.3351,1529
+Periodic abstinence,Traditional,2018,0.3219,0.2809,0.3656,757
+Withdrawal,Traditional,2018,0.348,0.3071,0.3827,1380
+Implants,Modern,2018,0.1328,0.1058,0.162,1250
+Other traditional,Traditional,2018,0.4083,0.3348,0.4881,295
+Pill,Modern,2024,0.5023,0.4539,0.5538,872
+IUD,Modern,2024,0.0921,0.0501,0.146,167
+Injectables,Modern,2024,0.4651,0.4341,0.4989,1915
+Male condom,Modern,2024,0.2805,0.251,0.3144,1672
+Periodic abstinence,Traditional,2024,0.2347,0.1932,0.2739,544
+Withdrawal,Traditional,2024,0.2545,0.2243,0.2831,1618
+Implants,Modern,2024,0.1722,0.1492,0.1953,1996
+Other traditional,Traditional,2024,0.3677,0.2844,0.4563,210

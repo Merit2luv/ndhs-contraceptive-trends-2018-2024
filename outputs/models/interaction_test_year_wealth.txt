@@ -1,0 +1,4 @@
+Wald test for year:wealth
+ in svyglm(formula = modern ~ year * wealth + age + residence + educ + 
+    region, design = des, family = quasibinomial())
+F =  0.1461225  on  4  and  2597  df: p= 0.96475 
